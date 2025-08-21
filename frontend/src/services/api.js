@@ -1,3 +1,5 @@
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://job-listing-q0po.onrender.com'
+
 export async function fetchJobs(filters = {}) {
   const params = new URLSearchParams()
   if (filters.query) params.set('q', filters.query)
@@ -6,7 +8,7 @@ export async function fetchJobs(filters = {}) {
   if (filters.salaryMin) params.set('salaryMin', String(filters.salaryMin))
   if (filters.salaryMax) params.set('salaryMax', String(filters.salaryMax))
 
-  const res = await fetch(`/api/jobs?${params.toString()}`)
+  const res = await fetch(`${API_BASE_URL}/api/jobs?${params.toString()}`)
   if (!res.ok) {
     throw new Error('Failed to fetch jobs')
   }
@@ -14,7 +16,7 @@ export async function fetchJobs(filters = {}) {
 }
 
 export async function createJob(payload) {
-  const res = await fetch('/api/jobs', {
+  const res = await fetch(`${API_BASE_URL}/api/jobs`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
